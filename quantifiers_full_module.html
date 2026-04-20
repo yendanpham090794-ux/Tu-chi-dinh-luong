@@ -1,0 +1,311 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{padding:1rem 0;font-family:var(--font-sans)}
+.tbar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.2rem}
+.tb{padding:6px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-size:12px;font-weight:500;transition:all .15s}
+.tb.on{background:#E1F5EE;color:#085041;border-color:#5DCAA5}
+.sec{display:none}.sec.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem;margin-bottom:.85rem}
+.card h3{font-size:15px;font-weight:500;margin-bottom:.75rem;color:var(--color-text-primary)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{background:var(--color-background-secondary);color:var(--color-text-secondary);font-weight:500;padding:6px 7px;border:0.5px solid var(--color-border-tertiary);text-align:center}
+.tbl td{padding:6px 7px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top;line-height:1.5}
+.tbl td.c{text-align:center}.tbl tr:nth-child(even) td{background:var(--color-background-secondary)}
+.cnt{color:#27500A;font-weight:500}.uncnt{color:#791F1F;font-weight:500}.both{color:#3C3489;font-weight:500}
+.ok{color:#27500A}.no{color:#791F1F;text-decoration:line-through}
+.note{background:#FAEEDA;border:0.5px solid #FAC775;border-radius:var(--border-radius-md);padding:.65rem .9rem;font-size:13px;color:#633806;margin:.6rem 0;line-height:1.7}
+.tip{background:#E1F5EE;border:0.5px solid #5DCAA5;border-radius:var(--border-radius-md);padding:.65rem .9rem;font-size:13px;color:#085041;margin:.6rem 0;line-height:1.7}
+.warn{background:#FCEBEB;border:0.5px solid #F09595;border-radius:var(--border-radius-md);padding:.65rem .9rem;font-size:13px;color:#791F1F;margin:.6rem 0;line-height:1.7}
+.ex{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.5rem .8rem;font-size:13px;font-style:italic;color:var(--color-text-secondary);margin:.35rem 0;line-height:1.6}
+.ex b{font-style:normal;font-weight:500;color:var(--color-text-primary)}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:.65rem 0}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:.65rem 0}
+.mbox{border-radius:var(--border-radius-md);padding:.8rem}
+.mb-g{background:#E1F5EE;border:0.5px solid #5DCAA5}.mb-g h4{color:#085041;font-size:13px;font-weight:500;margin-bottom:5px}.mb-g p,.mb-g li{color:#0F6E56;font-size:12.5px;line-height:1.75}
+.mb-b{background:#E6F1FB;border:0.5px solid #85B7EB}.mb-b h4{color:#0C447C;font-size:13px;font-weight:500;margin-bottom:5px}.mb-b p,.mb-b li{color:#185FA5;font-size:12.5px;line-height:1.75}
+.mb-p{background:#EEEDFE;border:0.5px solid #AFA9EC}.mb-p h4{color:#3C3489;font-size:13px;font-weight:500;margin-bottom:5px}.mb-p p,.mb-p li{color:#534AB7;font-size:12.5px;line-height:1.75}
+.mb-a{background:#FAEEDA;border:0.5px solid #FAC775}.mb-a h4{color:#633806;font-size:13px;font-weight:500;margin-bottom:5px}.mb-a p,.mb-a li{color:#854F0B;font-size:12.5px;line-height:1.75}
+.mb-r{background:#FCEBEB;border:0.5px solid #F09595}.mb-r h4{color:#791F1F;font-size:13px;font-weight:500;margin-bottom:5px}.mb-r p,.mb-r li{color:#A32D2D;font-size:12.5px;line-height:1.75}
+ul.pl{padding-left:1rem}
+.hero{border:2px solid #E24B4A;border-radius:var(--border-radius-lg);padding:1rem 1.15rem;margin-bottom:.85rem;background:var(--color-background-primary)}
+.hero h3{font-size:14px;font-weight:500;color:#791F1F;margin-bottom:.75rem}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);font-weight:500}
+.bd-g{background:#E1F5EE;color:#085041}.bd-b{background:#E6F1FB;color:#0C447C}.bd-p{background:#EEEDFE;color:#3C3489}.bd-a{background:#FAEEDA;color:#633806}.bd-r{background:#FCEBEB;color:#791F1F}.bd-gr{background:#F1EFE8;color:#444441}
+.sbar{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:.75rem 1rem;margin-bottom:.85rem;display:flex;align-items:center;gap:10px}
+.snum{font-size:20px;font-weight:500;color:var(--color-text-primary)}.slbl{font-size:13px;color:var(--color-text-secondary)}
+.rbtn{margin-left:auto;padding:5px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;font-size:12px;color:var(--color-text-secondary)}
+.rbtn:hover{background:var(--color-background-secondary)}
+.qc{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;margin-bottom:.65rem}
+.qm{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.qn{font-size:11px;color:var(--color-text-tertiary);font-weight:500}
+.qt{font-size:13.5px;color:var(--color-text-primary);margin-bottom:.75rem;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opt{padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);font-size:13px;cursor:pointer;transition:all .15s;background:var(--color-background-primary);color:var(--color-text-primary);text-align:left;line-height:1.5}
+.opt:hover:not(.lk){background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#97C459;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#F09595;color:#791F1F}
+.opt.lk{cursor:default}
+.xp{margin-top:.55rem;padding:.6rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:12px;color:var(--color-text-secondary);line-height:1.6;display:none}
+.xp.sh{display:block}.xp b{font-weight:500;color:var(--color-text-primary)}
+.res{border-radius:var(--border-radius-lg);padding:1rem 1.2rem;margin-top:.85rem;display:none;text-align:center}
+.res.sh{display:block}
+.res.pass{background:#EAF3DE;border:0.5px solid #97C459}.res.near{background:#FAEEDA;border:0.5px solid #FAC775}.res.fail{background:#FCEBEB;border:0.5px solid #F09595}
+.res-sc{font-size:24px;font-weight:500;margin-bottom:4px}
+.res.pass .res-sc{color:#27500A}.res.near .res-sc{color:#633806}.res.fail .res-sc{color:#791F1F}
+.res-msg{font-size:13px}.res.pass .res-msg{color:#3B6D11}.res.near .res-msg{color:#854F0B}.res.fail .res-msg{color:#A32D2D}
+</style>
+
+<div class="w">
+<div class="tbar">
+  <button class="tb on" onclick="sw('th')">Lý thuyết</button>
+  <button class="tb" onclick="sw('qt')">Rà soát lý thuyết</button>
+  <button class="tb" onclick="sw('d1')">much/many/a lot of</button>
+  <button class="tb" onclick="sw('d2')">few/a few/little/a little</button>
+  <button class="tb" onclick="sw('d3')">some/any/no</button>
+  <button class="tb" onclick="sw('d4')">most/most of/all/each/every</button>
+  <button class="tb" onclick="sw('dm')">Thi thử tổng hợp</button>
+</div>
+
+<div id="th" class="sec on">
+
+<div class="card">
+  <h3>Bảng tổng hợp lượng từ</h3>
+  <div style="overflow-x:auto">
+  <table class="tbl">
+    <tr><th>Lượng từ</th><th>Đếm được</th><th>Không đếm được</th><th>Loại câu</th><th>Nghĩa</th><th>Ý thái độ</th></tr>
+    <tr><td class="c"><b>much</b></td><td class="c"><span class="no">✗</span></td><td class="c"><span class="ok">✓</span></td><td>Phủ định, câu hỏi</td><td>Nhiều</td><td>—</td></tr>
+    <tr><td class="c"><b>many</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="no">✗</span></td><td>Phủ định, câu hỏi</td><td>Nhiều</td><td>—</td></tr>
+    <tr><td class="c"><b>a lot of / lots of</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Câu khẳng định</td><td>Nhiều</td><td>—</td></tr>
+    <tr><td class="c"><b>some</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Khẳng định, mời mọc</td><td>Một vài</td><td>—</td></tr>
+    <tr><td class="c"><b>any</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Phủ định, câu hỏi</td><td>Bất kỳ</td><td>—</td></tr>
+    <tr><td class="c"><b>a few</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="no">✗</span></td><td>Khẳng định</td><td>Một vài (đủ)</td><td style="color:#27500A">Tích cực</td></tr>
+    <tr><td class="c"><b>few</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="no">✗</span></td><td>Khẳng định</td><td>Rất ít (không đủ)</td><td style="color:#791F1F">Tiêu cực</td></tr>
+    <tr><td class="c"><b>a little</b></td><td class="c"><span class="no">✗</span></td><td class="c"><span class="ok">✓</span></td><td>Khẳng định</td><td>Một chút (đủ)</td><td style="color:#27500A">Tích cực</td></tr>
+    <tr><td class="c"><b>little</b></td><td class="c"><span class="no">✗</span></td><td class="c"><span class="ok">✓</span></td><td>Khẳng định</td><td>Rất ít (không đủ)</td><td style="color:#791F1F">Tiêu cực</td></tr>
+    <tr><td class="c"><b>most</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Mọi loại</td><td>Hầu hết</td><td>—</td></tr>
+    <tr><td class="c"><b>all</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Mọi loại</td><td>Tất cả (100%)</td><td>—</td></tr>
+    <tr><td class="c"><b>each / every</b></td><td class="c"><span class="ok">✓ số ít</span></td><td class="c"><span class="no">✗</span></td><td>Mọi loại</td><td>Mỗi / từng cái</td><td>—</td></tr>
+    <tr><td class="c"><b>no</b></td><td class="c"><span class="ok">✓</span></td><td class="c"><span class="ok">✓</span></td><td>Khẳng định (nghĩa phủ)</td><td>Không có</td><td>—</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="hero">
+  <h3>Mẹo loại trừ nhanh trong đề thi (xu hướng ra đề)</h3>
+  <div class="row2">
+    <div class="mbox mb-r">
+      <h4>Bẫy 1 — much vs many</h4>
+      <p>Nhìn vào danh từ đi sau:<br>
+      Danh từ <b>đếm được số nhiều</b> (books, people...) → <b>many</b><br>
+      Danh từ <b>không đếm được</b> (water, money, time...) → <b>much</b></p>
+    </div>
+    <div class="mbox mb-r">
+      <h4>Bẫy 2 — few vs a few / little vs a little</h4>
+      <p>Câu có ý <b>tiêu cực</b> (không đủ, thiếu, kém) → <b>few / little</b><br>
+      Câu có ý <b>tích cực</b> (đủ dùng, may mắn còn lại) → <b>a few / a little</b><br>
+      Mẹo: Nếu thay được "but" → tích cực → dùng <b>a</b></p>
+    </div>
+    <div class="mbox mb-r">
+      <h4>Bẫy 3 — some vs any</h4>
+      <p>Câu <b>khẳng định</b> → <b>some</b><br>
+      Câu <b>phủ định / hỏi thông thường</b> → <b>any</b><br>
+      Câu hỏi <b>mời mọc / đề nghị</b> → <b>some</b></p>
+    </div>
+    <div class="mbox mb-r">
+      <h4>Bẫy 4 — most vs most of</h4>
+      <p>Danh từ trực tiếp (không có the/my/these...) → <b>most</b> + N<br>
+      Có <b>the / my / these / those / đại từ</b> trước N → <b>most of</b> + the/my... + N<br>
+      VD: Most students ✓ &nbsp;/&nbsp; Most of his students ✓<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Most of students ✗</p>
+    </div>
+  </div>
+</div>
+
+<div class="row2">
+  <div class="card" style="margin-bottom:0">
+    <h3>few / a few — đếm được số nhiều</h3>
+    <div class="tip"><b>a few</b> = có một vài (đủ, tích cực)<br>I have <b>a few</b> friends here. <i>(may mắn có vài người bạn)</i></div>
+    <div class="warn"><b>few</b> = rất ít (tiêu cực, không đủ)<br>She has <b>few</b> friends. <i>(gần như không có ai)</i></div>
+    <div class="note">Nhận diện: câu có <b>but, however, fortunately</b> → tích cực → <b>a few</b></div>
+  </div>
+  <div class="card" style="margin-bottom:0">
+    <h3>little / a little — không đếm được</h3>
+    <div class="tip"><b>a little</b> = có một chút (đủ, tích cực)<br>There's <b>a little</b> milk left. <i>(còn chút, dùng được)</i></div>
+    <div class="warn"><b>little</b> = rất ít (tiêu cực, gần như không có)<br>I had <b>little</b> hope of getting home. <i>(gần như vô vọng)</i></div>
+    <div class="note">Nhận diện: câu có <b>not enough, hardly, no hope, patience</b> → tiêu cực → <b>little/few</b></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:.85rem">
+  <h3>Quy tắc "of" — khi nào cần "of"?</h3>
+  <div class="row2">
+    <div class="mbox mb-g">
+      <h4>KHÔNG dùng "of" — danh từ trực tiếp</h4>
+      <p>some / many / much / all + N (không có the/my/these...)</p>
+      <div class="ex" style="margin-top:5px"><b>Some</b> people are friendly.<br><b>Many</b> students work hard.<br><b>Much</b> water was wasted.</div>
+    </div>
+    <div class="mbox mb-b">
+      <h4>PHẢI dùng "of" — khi có the/my/these/those/đại từ</h4>
+      <p>some of / many of / most of / all of + the/my/these/those/them/us</p>
+      <div class="ex" style="margin-top:5px"><b>Some of</b> his students are late.<br><b>All of</b> them passed.<br><b>Most of</b> the milk was wasted.</div>
+    </div>
+  </div>
+  <div class="warn">Lỗi sai phổ biến: <span style="text-decoration:line-through">Many the students</span> ✗ → đúng: <b>Many students</b> hoặc <b>Many of the students</b></div>
+</div>
+
+</div>
+
+<div id="qt" class="sec"></div>
+<div id="d1" class="sec"></div>
+<div id="d2" class="sec"></div>
+<div id="d3" class="sec"></div>
+<div id="d4" class="sec"></div>
+<div id="dm" class="sec"></div>
+</div>
+
+<script>
+const DATA={
+qt:[
+  {q:"'much' được dùng với loại danh từ nào?",opts:["Danh từ đếm được số nhiều","Danh từ không đếm được","Cả hai loại","Danh từ số ít"],ans:1,t:"bd-b",exp:"<b>much</b> chỉ đi với danh từ không đếm được (water, money, time, information...). Câu phủ định hoặc câu hỏi."},
+  {q:"'a few' khác 'few' ở điểm nào quan trọng nhất?",opts:["a few dùng cho danh từ không đếm được, few cho đếm được","a few mang ý tích cực (đủ dùng), few mang ý tiêu cực (thiếu)","a few dùng trong câu hỏi, few trong câu khẳng định","Không có sự khác biệt về nghĩa"],ans:1,t:"bd-g",exp:"<b>a few</b> = tích cực (còn có một vài, may mắn), <b>few</b> = tiêu cực (quá ít, không đủ). Cả hai đều đếm được số nhiều."},
+  {q:"'I don't think she'd be a good teacher — she has got _____ patience.' — điền đúng:",opts:["some","few","little","a little"],ans:2,t:"bd-g",exp:"'patience' = không đếm được. Câu có ý tiêu cực (không đủ kiên nhẫn để làm giáo viên) → <b>little</b>."},
+  {q:"Câu hỏi mời mọc 'Would you like _____ coffee?' dùng 'some' hay 'any'?",opts:["any — vì là câu hỏi","some — vì là câu mời mọc","much — vì coffee không đếm được","a few — vì mang ý tích cực"],ans:1,t:"bd-p",exp:"Câu hỏi mang tính mời mọc / đề nghị → dùng <b>some</b>. Quy tắc any chỉ áp dụng cho câu hỏi thông thường."},
+  {q:"Câu nào ĐÚNG về quy tắc 'of'?",opts:["Most of students passed the test.","Many the students were absent.","Some of his students are late.","All students of passed the exam."],ans:2,t:"bd-a",exp:"<b>Some of his students</b> ✓ — có 'his' (đại từ sở hữu) trước N → cần 'of'. Câu A sai: 'Most of students' thiếu the/his/these. Câu B sai: 'Many the students' — many không cần 'the'."},
+  {q:"'most' vs 'most of' — câu nào ĐÚNG?",opts:["Most of students like sports.","Most the students like sports.","Most students like sports.","Most students of like sports."],ans:2,t:"bd-a",exp:"<b>Most students</b> ✓ — danh từ trực tiếp, không có the/my/these → không cần 'of'. Muốn dùng 'of': Most <b>of the</b> students like sports."},
+  {q:"'a little' khác 'little' thế nào? Điền vào: 'There is _____ milk left — just enough for your cereal.'",opts:["little","few","a little","a few"],ans:2,t:"bd-g",exp:"'just enough' → ý tích cực, còn đủ dùng → <b>a little</b>. 'milk' không đếm được → không dùng few/a few."},
+  {q:"'each' và 'every' đi với danh từ ở dạng nào?",opts:["Số nhiều","Số ít","Cả số ít lẫn số nhiều","Không đếm được"],ans:1,t:"bd-p",exp:"<b>each</b> và <b>every</b> đi với danh từ số ít: each student, every room. Động từ cũng chia số ít."},
+  {q:"'Have you seen _____ good films recently?' — điền đúng:",opts:["any","some","a few","most of"],ans:0,t:"bd-p",exp:"Câu hỏi thông thường (Have you...?) → dùng <b>any</b>. Nếu là câu mời mọc như 'Would you like to see some films?' thì mới dùng 'some'."},
+  {q:"'The examination was not very difficult but it was _____ long.' — điền đúng:",opts:["so much","too much","very much","much too"],ans:3,t:"bd-b",exp:"'much too + adj' = quá (too) + adj được nhấn mạnh bởi 'much'. 'much too long' = quá dài. 'too much' sai vì sau 'too much' phải là danh từ không đếm được."},
+  {q:"'Increasing _____ of fruit in the diet may reduce heart disease.' — điền đúng:",opts:["the amount","an amount","the number","a number"],ans:0,t:"bd-b",exp:"'fruit' = không đếm được → dùng <b>amount</b> (không dùng 'number'). 'the amount of' = lượng... (cụ thể). Câu chuẩn: the amount of fruit."},
+  {q:"Câu nào dùng SAI lượng từ?",opts:["I have a few friends in Hanoi.","There is little water left.","She has few patience for mistakes.","He spent a great deal of time writing."],ans:2,t:"bd-r",exp:"'patience' = không đếm được → phải dùng <b>little</b> (không dùng 'few'). Câu C sai: 'few patience' → đúng là 'little patience'."},
+],
+d1:[
+  {q:"Thank you for bringing me along. I never thought Shakespeare could be so _____ fun.",opts:["many","much","few","some"],ans:1,t:"bd-b",exp:"'fun' = không đếm được → <b>much</b>. 'so much fun' = vui thật sự."},
+  {q:"He had spent _____ time writing an essay about his childhood.",opts:["a large number of","a great deal of","a few","many"],ans:1,t:"bd-b",exp:"'time' = không đếm được → không dùng 'many/a few'. <b>a great deal of</b> = rất nhiều (dùng cho không đếm được)."},
+  {q:"Did you take _____ photographs when you were on holiday?",opts:["some","either","much","many"],ans:3,t:"bd-b",exp:"Câu hỏi thông thường + 'photographs' đếm được số nhiều → <b>many</b>."},
+  {q:"The news has _____ information.",opts:["much","many","some","any"],ans:0,t:"bd-b",exp:"'information' = không đếm được → <b>much</b>. 'The news has much information.'"},
+  {q:"We'll hurry. We haven't got _____ time left.",opts:["some","many","much","any"],ans:2,t:"bd-b",exp:"Câu phủ định + 'time' không đếm được → <b>much</b>. 'haven't got much time.'"},
+  {q:"You talk too _____ and you often do too _____ tricks in class.",opts:["much / many","little / much","little / much","many / much"],ans:0,t:"bd-b",exp:"'talk' = hành động → much (adv). 'tricks' = đếm được số nhiều → many. → <b>much / many</b>."},
+  {q:"He bought _____ furniture for her new apartment.",opts:["many","few","much","a few"],ans:2,t:"bd-b",exp:"'furniture' = không đếm được (danh từ tập hợp) → <b>much</b>. Không dùng 'many furniture'."},
+  {q:"There is _____ traffic on the street at rush hours.",opts:["are too many","is too much","are too a lot","are too little"],ans:1,t:"bd-b",exp:"'traffic' = không đếm được, động từ số ít → <b>is too much</b>."},
+  {q:"Do you know _____ people in this neighborhood?",opts:["much","a little","many","little"],ans:2,t:"bd-b",exp:"'people' = đếm được số nhiều + câu hỏi → <b>many</b>."},
+  {q:"There are _____ people there.",opts:["too many","too a little","too much","too little"],ans:0,t:"bd-b",exp:"'people' = đếm được số nhiều → <b>too many people</b>."},
+],
+d2:[
+  {q:"The snow was getting quite deep. I had _____ hope of getting home that night.",opts:["much","little","a great deal of","a little"],ans:1,t:"bd-g",exp:"'hope' = không đếm được. Câu có ý tiêu cực (gần như vô vọng) → <b>little</b>. Nếu 'a little' → còn chút hy vọng."},
+  {q:"I don't think Jill would be a good teacher. She's got _____ patience.",opts:["some","few","little","a little"],ans:2,t:"bd-g",exp:"'patience' = không đếm được. Câu có ý tiêu cực (thiếu kiên nhẫn) → <b>little</b>."},
+  {q:"Very _____ people knew about it.",opts:["a few","less","much","little"],ans:0,t:"bd-g",exp:"'people' = đếm được số nhiều. 'Very a few' = rất ít người. Mẹo: 'very' đứng trước 'a few' để nhấn mạnh ít."},
+  {q:"He is a man of _____ words.",opts:["less","a little","fewer","few"],ans:3,t:"bd-g",exp:"'words' = đếm được số nhiều. 'a man of few words' = người ít nói. Tiêu cực (nói ít) → <b>few</b>."},
+  {q:"_____ people heard about the book, but _____ people read it.",opts:["Many / few","Much / little","Many / little","Few / Fewer"],ans:0,t:"bd-g",exp:"'people' đếm được số nhiều → many/few. Câu 1 (nhiều người nghe) → Many. Câu 2 (ít người đọc) → <b>few</b> (tiêu cực)."},
+  {q:"She has very _____ knowledge of the matter.",opts:["few","little","some","many"],ans:1,t:"bd-g",exp:"'knowledge' = không đếm được. Câu có 'very ___' nhấn mạnh ít → <b>little</b> (không có 'a little' vì có 'very')."},
+  {q:"There is _____ water in the bottle.",opts:["little","a few","any","many"],ans:0,t:"bd-g",exp:"'water' = không đếm được. Câu mô tả lượng ít (tiêu cực) → <b>little</b>."},
+  {q:"I have _____ money, not enough to buy groceries.",opts:["a lot of","little","any","many"],ans:1,t:"bd-g",exp:"'not enough' = tiêu cực. 'money' = không đếm được → <b>little</b>."},
+  {q:"I have _____ money, enough to buy a ticket.",opts:["a lot of","little","many","a little"],ans:3,t:"bd-g",exp:"'enough' = tích cực (đủ). 'money' không đếm được → <b>a little</b>."},
+  {q:"She has _____ books, not enough for references.",opts:["few","a few","many","little"],ans:0,t:"bd-g",exp:"'not enough' = tiêu cực. 'books' đếm được số nhiều → <b>few</b>."},
+  {q:"She has _____ books, enough to read.",opts:["many","few","a few","a little"],ans:2,t:"bd-g",exp:"'enough' = tích cực. 'books' đếm được số nhiều → <b>a few</b>."},
+  {q:"We have to delay this course because there are _____ students.",opts:["a large number of","few","some","many"],ans:1,t:"bd-g",exp:"Phải hoãn khóa học vì thiếu sinh viên → ý tiêu cực. 'students' đếm được số nhiều → <b>few</b>."},
+],
+d3:[
+  {q:"Would you like _____ milk in your coffee?",opts:["little","a little","a few","some"],ans:3,t:"bd-p",exp:"Câu mời mọc (Would you like...) → <b>some</b>. Cũng có thể chấp nhận 'a little' nhưng 'some' tự nhiên hơn trong văn nói."},
+  {q:"Can I have _____ coffee for my breakfast?",opts:["any","few","little","some"],ans:3,t:"bd-p",exp:"Câu đề nghị (Can I have...) → <b>some</b>. 'coffee' không đếm được."},
+  {q:"Have you seen _____ good films recently?",opts:["any","some","a few","most of"],ans:0,t:"bd-p",exp:"Câu hỏi thông thường → <b>any</b>."},
+  {q:"There are _____ eggs on the table.",opts:["some","any","many","much"],ans:0,t:"bd-p",exp:"Câu khẳng định + 'eggs' đếm được số nhiều → <b>some</b>."},
+  {q:"Is there _____ cheese on the table?",opts:["some","any","many","much"],ans:1,t:"bd-p",exp:"Câu hỏi thông thường + 'cheese' không đếm được → <b>any</b>."},
+  {q:"Peter doesn't want _____ eggs, but he wants some soup.",opts:["some","any","many","much"],ans:1,t:"bd-p",exp:"Câu phủ định (doesn't want) → <b>any</b>. 'eggs' đếm được số nhiều."},
+  {q:"There is _____ milk in the glass.",opts:["some","any","many","much"],ans:0,t:"bd-p",exp:"Câu khẳng định + 'milk' không đếm được → <b>some</b>."},
+  {q:"Let me know if you need _____ help.",opts:["any","many","some","much"],ans:0,t:"bd-p",exp:"Câu điều kiện (if) hàm ý chưa chắc → <b>any</b>. 'help' không đếm được."},
+  {q:"She didn't take _____ money with her.",opts:["any","many","some","no"],ans:0,t:"bd-p",exp:"Câu phủ định (didn't take) → <b>any</b>. 'money' không đếm được."},
+  {q:"She went out without _____ money.",opts:["any","many","much","some"],ans:0,t:"bd-p",exp:"'without' hàm ý phủ định → <b>any</b>. 'without any money' = không có tiền."},
+  {q:"Can I have _____ sugar, please.",opts:["any","some","much","little"],ans:1,t:"bd-p",exp:"Câu đề nghị/xin → <b>some</b>. 'sugar' không đếm được."},
+  {q:"I can't find it _________.",opts:["somewhere","nowhere","everyplace","anywhere"],ans:3,t:"bd-p",exp:"Câu phủ định (can't find) + nơi chốn → <b>anywhere</b>. (= không ở bất cứ đâu)"},
+],
+d4:[
+  {q:"______ the Vietnamese people make their living by farming.",opts:["Most","Most of","Some of","Many of"],ans:0,t:"bd-a",exp:"Danh từ trực tiếp không có the/my/these → <b>Most</b> + N trực tiếp. 'Most of the Vietnamese people' cũng đúng nhưng không có trong đáp án với 'the'."},
+  {q:"______ of Asian students reject the American view that marriage is a partnership of equals.",opts:["The majority","The many","The number","A great deal"],ans:0,t:"bd-a",exp:"<b>The majority of</b> = phần lớn. 'The majority of Asian students' = đa số sinh viên châu Á. 'The many' không tồn tại."},
+  {q:"In _____ people, the areas of the brain that control speech are located in the left hemisphere.",opts:["mostly of","most","almost of","the most of"],ans:1,t:"bd-a",exp:"<b>most</b> + N trực tiếp. 'In most people' = ở hầu hết mọi người. Không dùng 'mostly of / almost of'."},
+  {q:"There are four books on the table. _____ has a different color.",opts:["Every","Each","Many","Some"],ans:1,t:"bd-a",exp:"<b>Each</b> = mỗi cái (xét từng cái một). 'Each has a different color' = mỗi quyển có màu khác nhau. 'Every' không dùng một mình làm chủ ngữ theo nghĩa này."},
+  {q:"He has two bookstores. One is in Thac Mo. _____ is in Phuoc Binh.",opts:["other","the others","another","the other"],ans:3,t:"bd-a",exp:"Có 2 vật, đã nói 1 (one) → cái còn lại (chỉ 1) → <b>the other</b>. 'another' = thêm 1 cái khác nữa (trong số nhiều)."},
+  {q:"There is a telephone in _____ room of the house.",opts:["every","any","some","no"],ans:0,t:"bd-a",exp:"<b>every</b> = mỗi phòng (100% các phòng). 'every room' đi với danh từ số ít."},
+  {q:"You should read _____ sentence carefully.",opts:["every","some","many","a lot of"],ans:0,t:"bd-a",exp:"<b>every</b> = từng câu một. 'every sentence' đi với danh từ số ít."},
+  {q:"_____ has right to vote.",opts:["something","everyone","many people","some people"],ans:1,t:"bd-a",exp:"<b>Everyone</b> = mọi người (đại từ bất định). 'everyone has right to vote' = mọi người đều có quyền bầu cử."},
+  {q:"Both men _____ interested in this job in the interview yesterday.",opts:["are","was","were","is"],ans:2,t:"bd-a",exp:"'Both men' = số nhiều + quá khứ → <b>were</b>."},
+  {q:"There _____ at the door.",opts:["is somebody","is anybody","is everybody","isn't nobody"],ans:0,t:"bd-a",exp:"Câu khẳng định, có người ở cửa → <b>somebody</b>. 'is somebody' = có ai đó. 'isn't nobody' = double negative, sai."},
+  {q:"The house was empty. There is _____ living here.",opts:["someone","anybody","nobody","everybody"],ans:2,t:"bd-a",exp:"Nhà trống → không ai sống → <b>nobody</b>. 'There is nobody living here.'"},
+  {q:"I'm not hungry. I don't want _____ to eat.",opts:["everything","anything","something","nothing"],ans:3,t:"bd-a",exp:"Câu phủ định (don't want) + câu có ý từ chối → <b>nothing</b>. 'I don't want anything' cũng đúng ngữ pháp nhưng 'nothing' diễn đạt mạnh hơn và tự nhiên hơn trong ngữ cảnh này."},
+],
+dm:[]
+};
+
+function buildMix(){
+  const all=[];
+  ['qt','d1','d2','d3','d4'].forEach(k=>{DATA[k].forEach(q=>all.push({...q,_s:k}));});
+  for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]];}
+  return all.slice(0,20);
+}
+
+const LABELS={'bd-b':'much / many / a lot of','bd-g':'few / a few / little / a little','bd-p':'some / any / no','bd-a':'most / all / each / every','bd-r':'Phát hiện lỗi','bd-gr':'Lý thuyết'};
+const ST={};
+
+function render(id,qs,wr){
+  if(!ST[id])ST[id]={a:{},sc:0};
+  const el=document.getElementById(id);
+  let h=`<div class="sbar"><div><div class="snum" id="sc-${id}">0/${qs.length}</div><div class="slbl">câu đúng</div></div><button class="rbtn" onclick="rst('${id}')">Làm lại</button></div>`;
+  qs.forEach((q,i)=>{
+    const bl=q.t||'bd-gr';
+    const ll=LABELS[bl]||'Lượng từ';
+    h+=`<div class="qc"><div class="qm"><span class="qn">Câu ${i+1}</span><span class="badge ${bl}">${ll}</span></div><div class="qt">${q.q}</div><div class="opts">`;
+    q.opts.forEach((o,j)=>{h+=`<button class="opt" id="op-${id}-${i}-${j}" onclick="pick('${id}',${i},${j})">${String.fromCharCode(65+j)}. ${o}</button>`;});
+    h+=`</div><div class="xp" id="ex-${id}-${i}">${q.exp}</div></div>`;
+  });
+  if(wr) h+=`<div class="res" id="res-${id}"><div class="res-sc" id="rs-${id}"></div><div class="res-msg" id="rm-${id}"></div><button class="rbtn" style="margin-top:10px" onclick="rst('${id}')">Làm lại</button></div>`;
+  el.innerHTML=h;el._qs=qs;el._wr=wr;
+}
+
+function pick(id,qi,oi){
+  const s=ST[id];
+  if(s.a[qi]!==undefined)return;
+  s.a[qi]=oi;
+  const q=document.getElementById(id)._qs[qi];
+  if(q.ans===oi)s.sc++;
+  document.getElementById(`sc-${id}`).textContent=`${s.sc}/${document.getElementById(id)._qs.length}`;
+  document.querySelectorAll(`[id^="op-${id}-${qi}-"]`).forEach((b,j)=>{
+    b.classList.add('lk');
+    if(j===q.ans)b.classList.add('ok');
+    else if(j===oi)b.classList.add('no');
+  });
+  document.getElementById(`ex-${id}-${qi}`).classList.add('sh');
+  const wr=document.getElementById(id)._wr;
+  const qs=document.getElementById(id)._qs;
+  if(wr && Object.keys(s.a).length===qs.length){
+    const rb=document.getElementById(`res-${id}`);
+    if(!rb)return;
+    const pct=Math.round(s.sc/qs.length*100);
+    document.getElementById(`rs-${id}`).textContent=`${s.sc}/${qs.length} câu đúng (${pct}%)`;
+    let cls='fail',msg='Chưa đạt — cần ôn lại lý thuyết từng nhóm lượng từ!';
+    if(pct>=80){cls='pass';msg='Đạt! Nắm tốt chuyên đề lượng từ.';}
+    else if(pct>=60){cls='near';msg='Gần đạt. Xem lại phần few/little và some/any.';}
+    rb.className=`res sh ${cls}`;
+    document.getElementById(`rm-${id}`).textContent=msg;
+  }
+}
+
+function rst(id){
+  ST[id]={a:{},sc:0};
+  const map={qt:DATA.qt,d1:DATA.d1,d2:DATA.d2,d3:DATA.d3,d4:DATA.d4,dm:buildMix()};
+  render(id,map[id],id==='qt'||id==='dm');
+}
+
+function sw(id){
+  document.querySelectorAll('.tb').forEach((t,i)=>{
+    const ids=['th','qt','d1','d2','d3','d4','dm'];
+    t.classList.toggle('on',ids[i]===id);
+  });
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(id!=='th'&&!document.getElementById(id)._qs){
+    const map={qt:DATA.qt,d1:DATA.d1,d2:DATA.d2,d3:DATA.d3,d4:DATA.d4,dm:buildMix()};
+    render(id,map[id],id==='qt'||id==='dm');
+  }
+}
+</script>
